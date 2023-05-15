@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TextInput, View, ToastAndroid } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import NormalGreenBtn from '../components/NormalGreenBtn'
-import { login } from '../actions/apis'
+import { checkAuthAPI, login } from '../actions/apis'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const AuthLogin = ({ setIsLogedIn }) => {
@@ -55,29 +55,23 @@ const AuthLogin = ({ setIsLogedIn }) => {
   }
   
   const checkAuth = async () => {
-    let token;
-    let canCheckList;
-    let canAddNumber;
-    let canCreateUser;
-    try {
-      token = await AsyncStorage.getItem('@token')
-    } catch (e) {"token problem: ", console.log(e)};
-    try {
-      canCheckList = await AsyncStorage.getItem('@canCheckList')
-    } catch (e) {"canCheckList problem: ", console.log(e)};
-    try {
-      canAddNumber = await AsyncStorage.getItem('@canAddNumber')
-    } catch (e) {"canAddNumber problem: ", console.log(e)};
-    try {
-      canCreateUser = await AsyncStorage.getItem('@canCreateUser')
-    } catch (e) {"canCreateUser problem: ", console.log(e)};
-    try {
-      canCheckUsers = await AsyncStorage.getItem('@canCheckUsers')
-    } catch (e) {"canCheckUsers problem: ", console.log(e)};
-
-    if(!!token && !!canAddNumber && !!canCheckList && !!canCreateUser && !!canCheckUsers){
-      setIsLogedIn(true);
-    }
+    await checkAuthAPI().then(async (res)=>{
+      if(res.data.status === "success"){
+        try {
+          await AsyncStorage.setItem('@canCheckList', `${res.data.canCheckList}`)
+        } catch (e) {"token problem: ", console.log(e)};
+        try {
+          await AsyncStorage.setItem('@canAddNumber', `${res.data.canAddNumber}`)
+        } catch (e) {"token problem: ", console.log(e)};
+        try {
+          await AsyncStorage.setItem('@canCreateUser', `${res.data.canCreateUser}`)
+        } catch (e) {"token problem: ", console.log(e)};
+        try {
+          await AsyncStorage.setItem('@canCheckUsers', `${res.data.canCheckUsers}`)
+        } catch (e) {"token problem: ", console.log(e)};
+        setIsLogedIn(true);
+      }
+    }).catch(err=>showToaster(err.message));
   }
 
   useEffect(() => {

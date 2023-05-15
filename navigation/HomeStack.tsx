@@ -5,6 +5,8 @@ import { StyleSheet, View, ToastAndroid } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Home from '../pages/Home';
+import PhoneNumberList from '../pages/PhoneNumberList';
+import PhoneNumberListByVillageId from '../pages/PhoneNumberListByVillageId';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,29 +18,28 @@ const HomeStack = () => {
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={({ route }) => ({
-            tabBarHideOnKeyboard: true,
-            headerTitle: "",
-            tabBarIcon: ({ focused, color, size }) => {
-              let iconName='home';
-              if (route.name === 'Shops') {
-                iconName = 'store';
-              } else if (route.name === 'Search') {
-                iconName = 'magnify';
-              } else if (route.name === 'Meetings') {
-                iconName = 'video';
-              } else if (route.name === 'Account') {
-                iconName = 'account-circle';
-              }
-              return <MaterialCommunityIcons name={iconName} color={focused ? 'black' : 'gray'} size={size} />;
+            // headerTitle: "",
+            // headerShown: false,
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'black'
             },
-            tabBarActiveTintColor: 'black',
-            tabBarInactiveTintColor: 'gray',
           })}
         >
           <Stack.Screen
             name="Home"
             component={Home}
-            options={{title: 'Home'}}
+            options={{title: 'Hum Saath'}}
+          />
+          <Stack.Screen
+            name="phoneNumberList"
+            component={PhoneNumberList}
+            options={{title: 'Home', headerShown: false,}}
+          />
+          <Stack.Screen
+            name="phoneNumberListByVillageId"
+            component={PhoneNumberListByVillageId}
+            options={{title: 'Home', headerShown: false,}}
           />
         </Stack.Navigator>
       </NavigationContainer>
