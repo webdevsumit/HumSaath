@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View, ToastAndroid } from 'react-native'
+import { StyleSheet, Text, TextInput, View, ToastAndroid, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import VillageSelection from '../components/VillageSelection';
 import NormalGreenBtn from '../components/NormalGreenBtn';
@@ -9,14 +9,16 @@ const PhoneNumberList = ({ navigation }) => {
   const showToaster = (message: any) => {ToastAndroid.showWithGravityAndOffset(message, ToastAndroid.LONG, ToastAndroid.CENTER,25,50,);}
 
   return (
-    <View style={styles.main}>
-      <View style={styles.whiteWrapper}>
-        <VillageSelection selectedVillageId={selectedVillageId} setSelectedVillageId={setSelectedVillageId} />
-        {!!selectedVillageId && <View style={styles.buttonView}>
-          <NormalGreenBtn text="गांवों की सूची प्राप्त करें" onPress={()=>navigation.navigate('phoneNumberListByVillageId', { selectedVillageId })} bgColor="#4681f4" />
-        </View>}
+    <ScrollView> 
+      <View style={styles.main}>
+        <View style={styles.whiteWrapper}>
+          <VillageSelection selectedVillageId={selectedVillageId} setSelectedVillageId={setSelectedVillageId} />
+          {!!selectedVillageId && <View style={styles.buttonView}>
+            <NormalGreenBtn text="गांवों की सूची प्राप्त करें" onPress={()=>navigation.navigate('phoneNumberListByVillageId', { selectedVillageId })} bgColor="#4681f4" />
+          </View>}
+        </View>
       </View>
-    </View>
+    </ScrollView>
   )
 }
 
@@ -27,7 +29,9 @@ const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#EDF1F0'
+    backgroundColor: '#EDF1F0',
+    paddingTop: 100,
+    paddingBottom: 100
   },
   text: {
     color: 'black'

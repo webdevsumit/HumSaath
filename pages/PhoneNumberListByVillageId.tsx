@@ -1,7 +1,10 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 
 const PhoneNumberListByVillageId = ({route, navigation}) => {
+
+	const [phoneNumbers, setPhoneNumbers] = useState([]);
+  
   return (
     <View style={styles.main}>
       <Text style={styles.text}>{route.params.selectedVillageId}</Text>
